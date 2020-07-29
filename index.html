@@ -1,0 +1,563 @@
+<style type="text/css">
+  /* Add your css styles here. Plagiarism will NOT be tolerated! */
+  @import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+  :root {
+    --container-width: 1100px;
+    --body-dark-color: #292e33;
+    --body-color: #ffffff;
+    --base-color: #2776ce;
+    --gutter: 0.8em;
+  }
+  body {
+    background: var(--body-dark-color);
+    color: var(--body-color);
+    font-family: Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    padding: 0;
+  }
+  *,
+  ::after,
+  ::before {
+    box-sizing: border-box;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  header {
+    padding: var(--gutter);
+    background-color: var(--base-color);
+  }
+  header .wrapper {
+    width: var(--container-width);
+    margin: 0 auto;
+  }
+  main {
+    width: var(--container-width);
+    margin: 0 auto;
+  }
+
+  /* Event Listing */
+  #events-listing {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  #events-listing > li {
+    flex-basis: 48%;
+    background: #3c4246;
+    margin-right: var(--gutter);
+    margin-bottom: 1.5em;
+    padding: var(--gutter);
+    box-shadow: 0px 0px 24px -5px rgba(0, 0, 0, 0.65);
+  }
+  #events-listing > li.premium {
+    flex-basis: 100%;
+  }
+
+  /* Event Attributes */
+  .event--type {
+    text-transform: uppercase;
+    font-size: 0.7em;
+    color: #ee8033;
+    padding-bottom: 0.3em;
+  }
+  .event--type.premium {
+    color: #60b912;
+  }
+  .event--info {
+    padding-top: var(--gutter);
+    display: flex;
+    justify-content: space-between;
+  }
+  .event--share {
+    display: flex;
+  }
+  .event--share li {
+    padding-right: var(--gutter);
+  }
+  .event--title {
+    margin: 0;
+    padding-bottom: 0.3em;
+    font-size: 1.8em;
+    color: #3dc1cb;
+  }
+  .event--desc {
+    height: 73px;
+  }
+
+  /* Buttons */
+  .event--buttons {
+    display: flex;
+    justify-content: space-between;
+    padding-top: var(--gutter);
+  }
+  button {
+    font-size: 1em;
+    border-radius: 5px;
+    padding: var(--gutter);
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  button.apply-now-cta {
+    border: 1px solid #1e75ce;
+    background: #1e75ce;
+    color: #ffffff;
+  }
+  button.apply-now-cta:hover {
+    border: 1px solid #339bf5;
+    background: #339bf5;
+  }
+  button.apply-now-cta.applied,
+  button.apply-now-cta:focus {
+    border: 1px solid #12569c;
+    background: #12569c;
+  }
+  button.learn-more-cta {
+    border: 1px solid #1e75ce;
+    background: #ffffff;
+    color: #1e75ce;
+  }
+  button.learn-more-cta:hover {
+    border: 1px solid #339bf5;
+    background: #ffffff;
+    color: #339bf5;
+  }
+  button.learn-more-cta:focus {
+    border: 1px solid #12569c;
+    background: #ffffff;
+    color: #12569c;
+  }
+  /* Dialog Box */
+  .overlay {
+    background: var(--base-color);
+    opacity: 0.5;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  .dialog-box {
+    width: 600px;
+    min-height: 400px;
+    position: fixed;
+    top: calc((100vh - 400px) / 2);
+    left: calc((100vw - 600px) / 2);
+    z-index: 2;
+    opacity: 1;
+    transition: all 10ms ease-in;
+    -webkit-transition: all 10ms ease-in; /* Safari */
+    border: 10px solid var(--base-color);
+    background: white;
+    border-radius: 10px;
+    padding: 15px;
+    color: var(--body-dark-color);
+  }
+  .dialog-box button.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    border: 0;
+  }
+  .dialog-box button.close::before {
+    content: "\2716";
+  }
+
+  /* Toast Box */
+  .toast-box {
+    width: 400px;
+    min-height: 100px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 2;
+    opacity: 0;
+    transition: all 900ms ease-in;
+    -webkit-transition: all 900ms ease-in; /* Safari */
+    background: #41b808;
+    padding: 15px;
+    color: var(--body-dark-color);
+    box-shadow: 0px 0px 24px -5px rgba(0, 0, 0, 0.65);
+  }
+  .toast-box.show {
+    opacity: 1;
+    transition: all 100ms ease-in;
+    -webkit-transition: all 100ms ease-in; /* Safari */
+  }
+  .toast-box.warning {
+    background: #f9ba37;
+  }
+  .toast-box button.close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: transparent;
+    border: 0;
+  }
+  .toast-box button.close::before {
+    content: "\2716";
+  }
+
+  /* Helper Styles */
+  .text-center {
+    text-align: center;
+  }
+  .text-center img {
+    margin: 0 auto;
+  }
+  .hide {
+    display: none;
+  }
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  /* Mobile Styles */
+  @media only screen and (max-width: 1100px) {
+    header .wrapper {
+      width: 100%;
+    }
+    main {
+      width: 100%;
+      padding: var(--gutter);
+    }
+    #events-listing > li {
+      flex-basis: 100%;
+      margin-right: 0;
+    }
+    .dialog-box {
+      width: 90%;
+    }
+  }
+</style>
+<!-- Enter your HTML code here. Plagiarism will NOT be tolerated!
+   Remember, your solution will be manually evaluated within 15 business days. -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VanHack's Events</title>
+  </head>
+  <body>
+    <header>
+      <div class="wrapper">
+        <img
+          src="https://i.imgur.com/OhBS0Ht.png"
+          alt="VanHack"
+          title="VanHack"
+        />
+      </div>
+    </header>
+    <main>
+      <h1>VanHack's Events</h1>
+      <ul id="events-listing"></ul>
+    </main>
+    <div class="dialog-box hide" role="dialog">
+      <div class="wrapper"></div>
+      <button class="close" aria-label="Close Dialog Box">&nbsp;</button>
+    </div>
+    <div class="overlay hide"></div>
+    <div class="toast-box">
+      <div class="wrapper"></div>
+      <button class="close" aria-label="Close Dialog Box">&nbsp;</button>
+    </div>
+  </body>
+</html>
+<script type="text/javascript">
+  // Add your javascript here. Plagiarism will NOT be tolerated!
+
+  const eventsTypes = [
+    // 6 Event Types
+    {
+      type: "meetup",
+      title: "MeetUp",
+    },
+    {
+      type: "leap",
+      title: "Leap",
+    },
+    {
+      type: "recruiting",
+      title: "Recruiting Mission",
+    },
+    {
+      type: "vanhackathon",
+      title: "VanHackathon",
+    },
+    {
+      type: "premium-webinar",
+      title: "Premium-only Webinar",
+    },
+    {
+      type: "open-webinar",
+      title: "Open Webinar",
+    },
+  ];
+
+  const events = [
+    {
+      id: 1,
+      name: "Virtual Hiring Event for Women",
+      eventType: "recruiting",
+      startDate: "2020-09-21",
+      endDate: "2020-09-25",
+      deadline: "2020-09-11",
+      location: "Online",
+      description: `<p>
+   VanHack is hosting our first <strong>Virtual Hiring Event for Women the week of September 21st</strong>. If you are a woman developer and are looking for a job abroad you should apply!</p>`,
+    },
+    {
+      id: 2,
+      name: "Event 2",
+      eventType: "leap",
+      startDate: "2020-07-31",
+      endDate: null,
+      deadline: "2020-07-28",
+      location: "Online",
+      description: "Description goes here 2",
+    },
+    {
+      id: 3,
+      name: "Event 3",
+      eventType: "recruiting",
+      startDate: "2020-07-31",
+      endDate: null,
+      deadline: "2020-07-28",
+      location: "Online",
+      description: "Description goes here 3",
+    },
+    {
+      id: 4,
+      name: "Event 4",
+      eventType: "vanhackathon",
+      startDate: "2020-07-31",
+      endDate: null,
+      deadline: "2020-07-28",
+      location: "Online",
+      description: "Description goes here 4",
+    },
+    {
+      id: 5,
+      name: "Event 5",
+      eventType: "premium-webinar",
+      startDate: "2020-07-31",
+      endDate: null,
+      deadline: "2020-07-28",
+      location: "Online",
+      description: "Description goes here 5",
+    },
+    {
+      id: 6,
+      name: "Event 6",
+      eventType: "open-webinar",
+      startDate: "2020-07-31",
+      endDate: null,
+      deadline: "2020-07-28",
+      location: "Online",
+      description: "Description goes here 6",
+    },
+  ];
+
+  const eventsListingElem = document.getElementById("events-listing");
+  const dialogBox = document.querySelector(".dialog-box");
+  const toastBox = document.querySelector(".toast-box");
+  const overlayWrap = document.querySelector(".overlay");
+
+  events.map((event) => {
+    const liNode = document.createElement("li");
+    const eventType = eventsTypes.find(
+      (eventType) => eventType.type === event.eventType
+    );
+    const eventTypeClass =
+      event.eventType === "premium-webinar" ? "premium" : "others";
+    const excerpt =
+      event.description.replace(/<[^>]*>/g, "").substr(0, 200) + "...";
+    liNode.classList.add(eventTypeClass);
+    liNode.innerHTML = `
+           <div class="event" id="event-${event.id}" aria-labelledby="event-label-${event.id}" aria-describedby="event-desc-${event.id}">
+               <div class="event--type ${eventTypeClass}">${eventType.title}</div>
+               <h2 class="event--title" id="event-label-${event.id}">${event.name}</h2>
+               <ul class="event--share">
+                   <li>
+                       <a href=""><img src="https://img.icons8.com/color/30/000000/facebook-new.png"/></a>
+                   </li>
+                   <li>
+                       <a href=""><img src="https://img.icons8.com/color/30/000000/twitter.png"/></a>
+                   </li>
+                   <li>
+                       <a href=""><img src="https://img.icons8.com/color/30/000000/linkedin.png"/></a>
+                   </li>
+               </ul>
+               <div id="event-info-${event.id}" class="event--info">
+                   <div>
+                       <div>Location: ${event.location}</div>
+                       <div>Start: ${event.startDate}</div>
+                   </div>
+                   <div>
+                       <div>&nbsp;</div>
+                       <div>Deadline: ${event.deadline}</div>                
+                   </div>
+               </div>
+               <div id="event-desc-${event.id}" class="event--desc"> 
+                   <p>${excerpt}</p>
+               </div>
+               <div class="event--buttons">
+                   <button aria-label="Learn more about ${event.name}" class="learn-more-cta" onclick="handleLearnMore(this, ${event.id})">Learn More</button>
+                   <button id="btn-apply-${event.id}" aria-label="Apply Now to ${event.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${event.id})">Apply Now</button>
+               </div>            
+           </div>
+           `;
+    eventsListingElem.appendChild(liNode);
+  });
+
+  dialogBox.querySelector(".close").addEventListener("click", (e) => {
+    e.preventDefault();
+    closeDialog();
+  });
+
+  toastBox.querySelector(".close").addEventListener("click", (e) => {
+    e.preventDefault();
+    closeToast();
+  });
+
+  function handleLearnMore(obj, eventId) {
+    const selectedEvent = getEvent(eventId);
+    let applyBtnHtml = ``;
+
+    if (localStorage.getItem("applications")) {
+      const applicationsData = JSON.parse(localStorage.getItem("applications"));
+      const eventApplied = Object.values(applicationsData).find(
+        (i) => i == eventId
+      );
+      console.log(eventApplied);
+      if (eventApplied === undefined) {
+        // If not already applied then add Apply button
+        applyBtnHtml = `<div class="buttons text-center">
+                                   <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
+                       </div>`;
+      }
+    } else {
+      applyBtnHtml = `<div class="buttons text-center">
+                                   <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
+                       </div>`;
+    }
+
+    dialogBox.querySelector(".wrapper").innerHTML = `
+           <h1>${selectedEvent.name}</h1>
+           <div>${selectedEvent.description}</div>
+           ${applyBtnHtml}
+       `;
+    openDialog();
+  }
+
+  function handleApplyNow(btn, eventId) {
+    const selectedEvent = getEvent(eventId);
+    const toastBoxWrapper = toastBox.querySelector(".wrapper");
+    let premiumMember = 0;
+    btn.innerHTML = "Applying..";
+
+    // Check for Premium Members
+    if (selectedEvent.eventType === "premium-webinar") {
+      premiumMember = 1;
+      toastBox.classList.add("warning");
+      toastBoxWrapper.innerHTML = `
+               <h3>Sorry! This Event is for Premium members only..</h3>
+               <button>Know More</button>
+           `;
+      btn.innerHTML = "Apply Now";
+      openToast();
+    } else {
+      if (toastBox.classList.contains("warning")) {
+        toastBox.classList.remove("warning");
+      }
+      // if already applied, then see application by opening modal box
+      if (btn.classList.contains("applied")) {
+        dialogBox.querySelector(".wrapper").innerHTML = `
+                   <h1>${selectedEvent.name}</h1>
+                   <div>Location: ${selectedEvent.location}</div>
+                   <div>Date: ${selectedEvent.startDate}</div>                
+               `;
+        btn.innerHTML = "See Application";
+        openDialog();
+      } else {
+        toastBoxWrapper.innerHTML = `
+                   <h3>Thanks for applying to the event "${selectedEvent.name}" </h3>
+               `;
+        const applyNowLayoutCta = document.getElementById(
+          "btn-apply-" + selectedEvent.id
+        );
+        applyNowLayoutCta.classList.add("applied");
+        applyNowLayoutCta.innerHTML = "See Application";
+
+        btn.classList.add("applied");
+        btn.innerHTML = "See Application";
+        openToast();
+      }
+    }
+
+    // Save in LocalStorage  if not premium member
+    if (!premiumMember) {
+      if (localStorage.getItem("applications")) {
+        const applicationsData = JSON.parse(
+          localStorage.getItem("applications")
+        );
+
+        // Check in storage
+        let alreadyExist = 0;
+        for (var i in applicationsData) {
+          if (applicationsData[i] == eventId) {
+            alreadyExist = 1;
+            break;
+          }
+        }
+
+        // If not already exists then add in locaStorage
+        if (!alreadyExist) {
+          applicationsData[Object.keys(applicationsData).length] = eventId;
+          localStorage.setItem(
+            "applications",
+            JSON.stringify(applicationsData)
+          );
+        }
+      } else {
+        localStorage.setItem("applications", JSON.stringify({ 0: eventId }));
+      }
+    }
+  }
+
+  function getEvent(eventId) {
+    return events.find((event) => event.id === eventId);
+  }
+
+  function closeDialog() {
+    dialogBox.classList.add("hide");
+    overlayWrap.classList.add("hide");
+  }
+
+  function openDialog() {
+    dialogBox.classList.remove("hide");
+    overlayWrap.classList.remove("hide");
+  }
+
+  function openToast() {
+    toastBox.classList.add("show");
+    setTimeout(function (e) {
+      closeToast();
+    }, 5000);
+  }
+
+  function closeToast() {
+    toastBox.classList.remove("show");
+  }
+</script>
