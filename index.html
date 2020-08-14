@@ -4,12 +4,12 @@
   :root {
     --container-width: 1100px;
     --body-dark-color: #292e33;
-    --body-color: #ffffff;
-    --base-color: #2776ce;
+    --body-color: #000000;
+    --base-color: rgb(39, 118, 206);
     --gutter: 0.8em;
   }
   body {
-    background: var(--body-dark-color);
+    background: white;
     color: var(--body-color);
     font-family: Roboto, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -28,45 +28,125 @@
   }
   header {
     padding: var(--gutter);
-    background-color: var(--base-color);
+    background: url(https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1400)
+      no-repeat center center;
+    background-size: cover;
+    box-shadow: inset 2px 2px 47px 49px rgba(0, 0, 0, 0.26);
+    height: 500px;
+    display: flex;
+    flex-direction: column;
   }
-  header .wrapper {
-    width: var(--container-width);
-    margin: 0 auto;
+  header .header--one {
+    display: flex;
+    justify-content: space-between;
+  }
+  header .header--two {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  nav ul {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.5em;
+  }
+  nav ul li {
+    margin-right: 1.5em;
+  }
+  nav ul li a {
+    font-size: 1.1em;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 400ms ease-in;
+  }
+  nav ul li a:hover {
+    color: rgb(255, 255, 255, 0.6);
+  }
+  header h1 {
+    color: white;
+    margin: 0;
+    font-size: 3.5em;
+    border: 1px solid;
+    padding: 0.5em;
+    background: rgb(0, 0, 0, 0.1);
   }
   main {
-    width: var(--container-width);
-    margin: 0 auto;
+    padding: 2em;
+  }
+  footer {
+    display: flex;
+    justify-content: space-between;
+    padding: var(--gutter);
+    border-top: 1px solid #0c282f;
+  }
+  footer a {
+    color: black;
+    text-decoration: none;
   }
 
   /* Event Listing */
   #events-listing {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-around;
   }
   #events-listing > li {
     flex-basis: 48%;
-    background: #3c4246;
-    margin-right: var(--gutter);
+    background: #fffadb;
+    color: #5d511f;
     margin-bottom: 1.5em;
-    padding: var(--gutter);
-    box-shadow: 0px 0px 24px -5px rgba(0, 0, 0, 0.65);
+  }
+  #events-listing > li .event--type {
+    color: #ffd83d;
   }
   #events-listing > li.premium {
-    flex-basis: 100%;
+    background: #bfe0d6;
+    color: #417084;
+  }
+  #events-listing > li.popular {
+    border: 2px dashed #1e75ce;
+  }
+  #events-listing > li.premium .event--type {
+    color: #60b912;
+  }
+  #events-listing > li.open {
+    background: #f9d6b7;
+    color: #93422b;
+  }
+  #events-listing > li.open .event--type {
+    color: #f9d6b7;
   }
 
   /* Event Attributes */
+  .event--header {
+    background: #0c282f;
+    padding: var(--gutter);
+    min-height: 153px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .event--main {
+    padding: var(--gutter);
+  }
   .event--type {
     text-transform: uppercase;
-    font-size: 0.7em;
-    color: #ee8033;
+    font-size: 0.9em;
+  }
+  .event--title {
+    margin: 0;
     padding-bottom: 0.3em;
+    font-size: 1.8em;
+    color: #ffffff;
   }
-  .event--type.premium {
-    color: #60b912;
+  .event--desc {
+    height: 73px;
   }
+
   .event--info {
     padding-top: var(--gutter);
     display: flex;
@@ -77,15 +157,6 @@
   }
   .event--share li {
     padding-right: var(--gutter);
-  }
-  .event--title {
-    margin: 0;
-    padding-bottom: 0.3em;
-    font-size: 1.8em;
-    color: #3dc1cb;
-  }
-  .event--desc {
-    height: 73px;
   }
 
   /* Buttons */
@@ -174,11 +245,10 @@
     min-height: 100px;
     position: fixed;
     top: 20px;
-    right: 20px;
+    right: -600px;
     z-index: 2;
     opacity: 0;
-    transition: all 900ms ease-in;
-    -webkit-transition: all 900ms ease-in; /* Safari */
+    transition: all 10s ease-out;
     background: #41b808;
     padding: 15px;
     color: var(--body-dark-color);
@@ -186,8 +256,7 @@
   }
   .toast-box.show {
     opacity: 1;
-    transition: all 100ms ease-in;
-    -webkit-transition: all 100ms ease-in; /* Safari */
+    right: 20px;
   }
   .toast-box.warning {
     background: #f9ba37;
@@ -213,23 +282,26 @@
   .hide {
     display: none;
   }
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
 
-  /* Mobile Styles */
+  /* Resposive Styles */
   @media only screen and (max-width: 1100px) {
-    header .wrapper {
-      width: 100%;
+    header .header--one {
+      flex-direction: column;
     }
     main {
       width: 100%;
       padding: var(--gutter);
+    }
+    nav ul {
+      justify-content: flex-start;
+    }
+    nav ul li a {
+      font-size: 0.9em;
+      color: black;
+    }
+    nav ul li a:hover {
+      font-size: 0.9em;
+      color: var(--base-color);
     }
     #events-listing > li {
       flex-basis: 100%;
@@ -237,38 +309,81 @@
     }
     .dialog-box {
       width: 90%;
+      height: 80%;
+      left: calc((100% - 90%) / 2);
+      top: calc((100% - 80%) / 2);
+      font-size: 1em;
+    }
+  }
+  @media only screen and (min-width: 1460px) {
+    #events-listing > li {
+      flex-basis: 33%;
     }
   }
 </style>
 <!-- Enter your HTML code here. Plagiarism will NOT be tolerated!
-   Remember, your solution will be manually evaluated within 15 business days. -->
+Remember, your solution will be manually evaluated within 15 business days. -->
+<!-- Fully Accessible Website -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Code Verification Test: HTML/CSS/Javascript"
+    />
+    <meta property="og:title" content="VanHack Code Verfication" />
+    <meta property="og:url" content="https://vanhack.com/platform/#/events" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:description"
+      content="Code Verification Test: HTML/CSS/Javascript"
+    />
+    <meta property="og:image" content="https://i.imgur.com/OhBS0Ht.png" />
+
     <title>VanHack's Events</title>
   </head>
   <body>
     <header>
-      <div class="wrapper">
-        <img
-          src="https://i.imgur.com/OhBS0Ht.png"
-          alt="VanHack"
-          title="VanHack"
-        />
+      <div class="header--one">
+        <a href="#" class="logo">
+          <img
+            src="https://i.imgur.com/OhBS0Ht.png"
+            alt="VanHack"
+            title="VanHack"
+          />
+        </a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#">Find a job</a></li>
+            <li><a href="#">Events</a></li>
+            <li><a href="#">Jobs Pipeline</a></li>
+            <li><a href="#">Slack</a></li>
+            <li><a href="#">Invite a Friend</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="header--two">
+        <h1>VanHack's Events</h1>
       </div>
     </header>
     <main>
-      <h1>VanHack's Events</h1>
       <ul id="events-listing"></ul>
     </main>
+    <footer>
+      <div>&copy; Copyright 2020</div>
+      <div>
+        Developed with ❤️ by
+        <a href="https://navdeepsingh.in" target="_blank">Navdeep Singh</a>
+      </div>
+    </footer>
     <div class="dialog-box hide" role="dialog">
       <div class="wrapper"></div>
       <button class="close" aria-label="Close Dialog Box">&nbsp;</button>
     </div>
     <div class="overlay hide"></div>
-    <div class="toast-box">
+    <div class="toast-box hide">
       <div class="wrapper"></div>
       <button class="close" aria-label="Close Dialog Box">&nbsp;</button>
     </div>
@@ -313,59 +428,97 @@
       startDate: "2020-09-21",
       endDate: "2020-09-25",
       deadline: "2020-09-11",
-      location: "Online",
+      location: "Vancouver, CANADA",
       description: `<p>
-   VanHack is hosting our first <strong>Virtual Hiring Event for Women the week of September 21st</strong>. If you are a woman developer and are looking for a job abroad you should apply!</p>`,
+VanHack is hosting our first <strong>Virtual Hiring Event for Women the week of September 21st</strong>. If you are a woman developer and are looking for a job abroad you should apply!</p>`,
     },
     {
       id: 2,
-      name: "Event 2",
+      name: "Success Case: Sakshi’s Journey from India to Canada",
       eventType: "leap",
-      startDate: "2020-07-31",
+      startDate: "2020-08-31",
       endDate: null,
-      deadline: "2020-07-28",
+      deadline: "2020-08-28",
       location: "Online",
-      description: "Description goes here 2",
+      description: `<p>Sakshi is a VanHack success case from India that got hired in Canada. Her amazing story tells us the importance of never giving up – and always dreaming big. She applied for more than 500 jobs before finding success! She will tell you all about her experience and her tips may help you get hired abroad too!</p>`,
     },
     {
       id: 3,
-      name: "Event 3",
+      name: "Acing the Coding Interview",
       eventType: "recruiting",
-      startDate: "2020-07-31",
+      startDate: "2020-08-12",
       endDate: null,
-      deadline: "2020-07-28",
+      deadline: "2020-08-11",
       location: "Online",
-      description: "Description goes here 3",
+      description: `<p>We are happy to welcome Tam Kbeili, Founder & CEO at CodeCast for this webinar. Tam will help you with insights and tips to ace a coding interview.</p>
+        <p>If you want to learn how to achieve better results in your interviews, you can't miss this webinar.</p>
+        `,
     },
     {
       id: 4,
-      name: "Event 4",
+      name:
+        "How Camilo got hired and relocated to Canada with the Covid-19 situation",
       eventType: "vanhackathon",
-      startDate: "2020-07-31",
+      startDate: "2020-08-31",
       endDate: null,
-      deadline: "2020-07-28",
+      deadline: "2020-08-28",
       location: "Online",
-      description: "Description goes here 4",
+      description:
+        "<p>Description of How Camilo got hired and relocated to Canada with the Covid-19 situation</p>",
     },
     {
       id: 5,
-      name: "Event 5",
+      name:
+        "Getting a job abroad: navigating your way through VanHack with Stefanie Wessler",
       eventType: "premium-webinar",
-      startDate: "2020-07-31",
+      startDate: "2020-08-31",
       endDate: null,
-      deadline: "2020-07-28",
+      deadline: "2020-08-28",
       location: "Online",
-      description: "Description goes here 5",
+      description:
+        "<p>Join us for a free webinar and learn how to navigate your way through VanHack to get hired abroad.</p>",
     },
     {
       id: 6,
-      name: "Event 6",
+      name:
+        "Insights from specialists: how to improve your profile and stand out for companies",
       eventType: "open-webinar",
-      startDate: "2020-07-31",
+      startDate: "2020-10-10",
       endDate: null,
-      deadline: "2020-07-28",
+      deadline: "2020-09-30",
       location: "Online",
-      description: "Description goes here 6",
+      description: `<p>VanHack is bringing three specialists to help you understand how you can improve your profile and stand out for companies to get hired abroad. </p>`,
+    },
+    {
+      id: 7,
+      name: "Interview-practice class OPEN HOUSE August",
+      eventType: "open-webinar",
+      startDate: "2020-08-31",
+      endDate: null,
+      deadline: "2020-08-28",
+      location: "Online",
+      description: `<p>Have you wondered what our Premium Interview-practice classes are like? </p>
+        <p>This is a pretty popular service we offer at VanHack Premium. It’s a great opportunity to improve your interview skills, network, and also your English grammar, vocabulary, pronunciation, and confidence. Our Premium candidates absolutely love it!</p>
+        <p>Come and join this FREE OPEN HOUSE CLASS! Get a little taste of VH Premium.</p>`,
+    },
+    {
+      id: 8,
+      name: "Meetup of Reactjs Developers",
+      eventType: "meetup",
+      startDate: "2020-09-12",
+      endDate: null,
+      deadline: "2020-09-11",
+      location: "Online",
+      description: `<p>Various aspects of Reactjs Development will be discussed</p>
+        <strong>Agenda</strong>
+        <ul>
+            <li>What is Reactjs</li>
+            <li>Think like Reactjs</li>
+            <li>JSX Components</li>
+            <li>Various hooks: useState, useMemo, useEffect</li>
+            <li>ReactJs vs VueJs</li>
+        </ul>
+        <p>Come and join this webinar.</p>`,
     },
   ];
 
@@ -373,51 +526,98 @@
   const dialogBox = document.querySelector(".dialog-box");
   const toastBox = document.querySelector(".toast-box");
   const overlayWrap = document.querySelector(".overlay");
+  let today = new Date();
 
-  events.map((event) => {
+  // Filter Upcoming Events
+  const upcomingEvents = events.filter((event) => {
+    const eventStartDate = new Date(event.startDate);
+    return eventStartDate.getTime() >= today.getTime();
+  });
+
+  // Iterate over array of upcoming-events
+  upcomingEvents.map((event) => {
     const liNode = document.createElement("li");
     const eventType = eventsTypes.find(
       (eventType) => eventType.type === event.eventType
     );
-    const eventTypeClass =
-      event.eventType === "premium-webinar" ? "premium" : "others";
+    if (event.eventType === "premium-webinar") {
+      eventTypeClass = "premium";
+    } else if (event.eventType === "open-webinar") {
+      eventTypeClass = "open";
+    } else if (
+      event.eventType === "leap" ||
+      event.eventType === "recruiting" ||
+      event.eventType === "vanhackathon"
+    ) {
+      eventTypeClass = "popular";
+    } else {
+      eventTypeClass = "others";
+    }
     const excerpt =
       event.description.replace(/<[^>]*>/g, "").substr(0, 200) + "...";
     liNode.classList.add(eventTypeClass);
     liNode.innerHTML = `
-           <div class="event" id="event-${event.id}" aria-labelledby="event-label-${event.id}" aria-describedby="event-desc-${event.id}">
-               <div class="event--type ${eventTypeClass}">${eventType.title}</div>
-               <h2 class="event--title" id="event-label-${event.id}">${event.name}</h2>
-               <ul class="event--share">
-                   <li>
-                       <a href=""><img src="https://img.icons8.com/color/30/000000/facebook-new.png"/></a>
-                   </li>
-                   <li>
-                       <a href=""><img src="https://img.icons8.com/color/30/000000/twitter.png"/></a>
-                   </li>
-                   <li>
-                       <a href=""><img src="https://img.icons8.com/color/30/000000/linkedin.png"/></a>
-                   </li>
-               </ul>
-               <div id="event-info-${event.id}" class="event--info">
-                   <div>
-                       <div>Location: ${event.location}</div>
-                       <div>Start: ${event.startDate}</div>
-                   </div>
-                   <div>
-                       <div>&nbsp;</div>
-                       <div>Deadline: ${event.deadline}</div>                
-                   </div>
-               </div>
-               <div id="event-desc-${event.id}" class="event--desc"> 
-                   <p>${excerpt}</p>
-               </div>
-               <div class="event--buttons">
-                   <button aria-label="Learn more about ${event.name}" class="learn-more-cta" onclick="handleLearnMore(this, ${event.id})">Learn More</button>
-                   <button id="btn-apply-${event.id}" aria-label="Apply Now to ${event.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${event.id})">Apply Now</button>
-               </div>            
-           </div>
-           `;
+        <div class="event" id="event-${
+          event.id
+        }" aria-labelledby="event-label-${
+      event.id
+    }" aria-describedby="event-desc-${event.id}">
+            <div class="event--header">
+                <div class="event--type ${eventTypeClass}">${
+      eventType.title
+    }</div>
+                <h2 class="event--title" id="event-label-${event.id}">${
+      event.name
+    }</h2>
+                <ul class="event--share">
+                    <li>
+                        <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://vanhack.com/platform/#/events"><img src="https://img.icons8.com/color/30/000000/facebook-new.png" alt="FB Share" /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://twitter.com/intent/tweet/?text=Check this out: ${
+                          eventType.title
+                        }&url=https://vanhack.com/platform/#/events"><img src="https://img.icons8.com/color/30/000000/twitter.png" alt="Twitter Share" /></a>
+                    </li>
+                    <li>
+                        <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https://vanhack.com/platform/#/events"><img src="https://img.icons8.com/color/30/000000/linkedin.png" alt="LinkedIn Share" /></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="event--main">
+                <div id="event-info-${event.id}" class="event--info">
+                    <div>
+                        <div>Location: <strong>${event.location}</strong></div>
+                        <div>Start: <strong>${formatDate(
+                          event.startDate
+                        )}</strong></div>
+                    </div>
+                    <div>
+                        <div>&nbsp;</div>
+                        <div>Deadline: <strong>${formatDate(
+                          event.deadline
+                        )}</strong></div>                
+                    </div>
+                </div>
+                <div id="event-desc-${event.id}" class="event--desc"> 
+                    <p>${excerpt}</p>
+                </div>
+                <div class="event--buttons">
+                    <button aria-label="Learn more about ${
+                      event.name
+                    }" class="learn-more-cta" onclick="handleLearnMore(this, ${
+      event.id
+    })">Learn More</button>
+                    <button id="btn-apply-${
+                      event.id
+                    }" aria-label="Apply Now to ${
+      event.name
+    }" class="apply-now-cta" onclick="handleApplyNow(this, ${
+      event.id
+    })">Apply Now</button>
+                </div> 
+            </div>           
+        </div>
+        `;
     eventsListingElem.appendChild(liNode);
   });
 
@@ -444,20 +644,20 @@
       if (eventApplied === undefined) {
         // If not already applied then add Apply button
         applyBtnHtml = `<div class="buttons text-center">
-                                   <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
-                       </div>`;
+                                <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
+                    </div>`;
       }
     } else {
       applyBtnHtml = `<div class="buttons text-center">
-                                   <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
-                       </div>`;
+                                <button aria-label="Apply Now to ${selectedEvent.name}" class="apply-now-cta" onclick="handleApplyNow(this, ${selectedEvent.id})">Apply Now</button>
+                    </div>`;
     }
 
     dialogBox.querySelector(".wrapper").innerHTML = `
-           <h1>${selectedEvent.name}</h1>
-           <div>${selectedEvent.description}</div>
-           ${applyBtnHtml}
-       `;
+        <h1>${selectedEvent.name}</h1>
+        <div>${selectedEvent.description}</div>
+        ${applyBtnHtml}
+    `;
     openDialog();
   }
 
@@ -472,9 +672,9 @@
       premiumMember = 1;
       toastBox.classList.add("warning");
       toastBoxWrapper.innerHTML = `
-               <h3>Sorry! This Event is for Premium members only..</h3>
-               <button>Know More</button>
-           `;
+            <h3>Sorry! This Event is for Premium members only..</h3>
+            <button>Know More</button>
+        `;
       btn.innerHTML = "Apply Now";
       openToast();
     } else {
@@ -482,18 +682,30 @@
         toastBox.classList.remove("warning");
       }
       // if already applied, then see application by opening modal box
-      if (btn.classList.contains("applied")) {
+      if (existInLocalStorage(eventId)) {
+        let selectedEventDate = formatDate(selectedEvent.startDate);
+
+        // If end event date is also, then join start & end date
+        if (selectedEvent.endDate !== null) {
+          let newDateStr = new Date(selectedEvent.startDate);
+          selectedEventDate =
+            newDateStr.getDate() + "-" + formatDate(selectedEvent.endDate);
+        }
+
         dialogBox.querySelector(".wrapper").innerHTML = `
-                   <h1>${selectedEvent.name}</h1>
-                   <div>Location: ${selectedEvent.location}</div>
-                   <div>Date: ${selectedEvent.startDate}</div>                
-               `;
+                <h1>${selectedEvent.name}</h1>
+                <div><strong>Location:</strong> ${selectedEvent.location}</div>
+                <div><strong>Date:</strong> ${selectedEventDate}</div> 
+                <p class="text-center">
+                    <strong>You have successfully applied for this event.</strong>
+                </p>               
+            `;
         btn.innerHTML = "See Application";
         openDialog();
       } else {
         toastBoxWrapper.innerHTML = `
-                   <h3>Thanks for applying to the event "${selectedEvent.name}" </h3>
-               `;
+                <h3>Thanks for applying to the event "${selectedEvent.name}" </h3>
+            `;
         const applyNowLayoutCta = document.getElementById(
           "btn-apply-" + selectedEvent.id
         );
@@ -506,7 +718,7 @@
       }
     }
 
-    // Save in LocalStorage  if not premium member
+    // Save in LocalStorage if not premium member
     if (!premiumMember) {
       if (localStorage.getItem("applications")) {
         const applicationsData = JSON.parse(
@@ -514,13 +726,7 @@
         );
 
         // Check in storage
-        let alreadyExist = 0;
-        for (var i in applicationsData) {
-          if (applicationsData[i] == eventId) {
-            alreadyExist = 1;
-            break;
-          }
-        }
+        const alreadyExist = existInLocalStorage(eventId);
 
         // If not already exists then add in locaStorage
         if (!alreadyExist) {
@@ -551,6 +757,7 @@
   }
 
   function openToast() {
+    toastBox.classList.remove("hide");
     toastBox.classList.add("show");
     setTimeout(function (e) {
       closeToast();
@@ -558,6 +765,50 @@
   }
 
   function closeToast() {
+    toastBox.classList.add("hide");
     toastBox.classList.remove("show");
   }
+
+  function formatDate(date) {
+    const setDate = new Date(date);
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    // Format dd MM, YY
+    return (
+      setDate.getDate() +
+      " " +
+      monthNames[setDate.getMonth()] +
+      ", " +
+      setDate.getFullYear()
+    );
+  }
+
+  function existInLocalStorage(eventId) {
+    const applicationsData = JSON.parse(localStorage.getItem("applications"));
+    let alreadyExist = 0;
+    for (var i in applicationsData) {
+      if (applicationsData[i] == eventId) {
+        alreadyExist = 1;
+        break;
+      }
+    }
+    return alreadyExist;
+  }
+
+  // Clear Localstorage after tab/window close
+  window.addEventListener("unload", function (e) {
+    localStorage.clear();
+  });
 </script>
